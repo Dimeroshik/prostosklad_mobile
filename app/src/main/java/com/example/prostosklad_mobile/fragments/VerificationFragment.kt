@@ -136,7 +136,6 @@ class VerificationFragment: Fragment() {
 
     fun isSuccessful(code: String)= code == "2133"
 
-
     fun setSpan(state: SpanStates){
 
         if (timerActive) timer.cancel()

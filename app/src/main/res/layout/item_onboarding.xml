@@ -34,13 +34,14 @@
     <TextView
         android:id="@+id/item_text"
         style="@style/text_usability"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         tools:text="@string/onboarding_item_text1"
-        app:layout_constraintTop_toBottomOf="@id/item_image"
+        app:layout_constraintTop_toBottomOf="@id/item_header"
         app:layout_constraintLeft_toLeftOf="@id/item_header"
+        app:layout_constraintRight_toRightOf="@id/item_header"
         />
 
 
