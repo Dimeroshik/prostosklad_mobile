@@ -1,7 +1,6 @@
 package com.example.prostosklad_mobile.fragments
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -9,28 +8,24 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.*
-import androidx.annotation.RequiresApi
 import androidx.core.view.*
-import androidx.fragment.app.Fragment
-import com.example.prostosklad_mobile.MainActivity
+import androidx.navigation.findNavController
+import com.example.prostosklad_mobile.base.BaseFragment
 import com.example.prostosklad_mobile.R
 import com.example.prostosklad_mobile.databinding.FragmentSigninBinding
 import com.example.prostosklad_mobile.dialogs.BotomSheetConfidentialFragment
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 
-class SignInFragment: Fragment() {
+class SignInFragment: BaseFragment() {
 
     companion object {
         var TAG = "SignInFragment"
+        var phoneKey = "phone"
     }
 
-    private lateinit var binding: FragmentSigninBinding
+    private var binding: FragmentSigninBinding by viewLifecycle()
 
-    private var posTop = 0
-    private var posBottom = 0
-
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +33,11 @@ class SignInFragment: Fragment() {
     ): View {
         binding = FragmentSigninBinding.inflate(layoutInflater)
 
-        initInsets(container)
+        setInset(binding.root, top = true, bottom = true)
+        setKeyboardInsetForButton(binding.buttonNext)
+        binding.buttonNext.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            updateMargins(bottom = 0)
+        }
         initViews()
 
         return binding.root
@@ -46,12 +45,12 @@ class SignInFragment: Fragment() {
 
     fun initViews(){
 
-        var textMaskListener = MaskedTextChangedListener(
+        val textMaskListener = MaskedTextChangedListener(
             "([000]) [000]-[00]-[00]",
             binding.etPhone,
             object : MaskedTextChangedListener.ValueListener {
-                override fun onTextChanged(maskFilled: Boolean, value: String) {
-                    checkButton(value.length)
+                override fun onTextChanged(maskFilled: Boolean, extractedValue: String) {
+                    checkButton(extractedValue.length)
                 }
             }
         )
@@ -61,41 +60,13 @@ class SignInFragment: Fragment() {
         binding.etPhone.addTextChangedListener(textMaskListener)
 
         binding.buttonNext.setOnClickListener {
-            var phone = binding.etPhone.text.toString()
-            (activity as MainActivity).openVerification(phone)
+            val phone = binding.etPhone.text.toString()
+            val action = SignInFragmentDirections.actionSignInFragmentToVerificationFragment()
+            action.phone = phone
+            view?.findNavController()?.navigate(action)
         }
 
         initSpan()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun initInsets(container: ViewGroup?){
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            posTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            posBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-
-            binding.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                updateMargins(
-                    top = posTop,
-                    bottom = posBottom)
-            }
-
-            insets
-        }
-
-        val cb = @RequiresApi(Build.VERSION_CODES.R)
-        object : WindowInsetsAnimation.Callback(DISPATCH_MODE_STOP) {
-            override fun onProgress(insets: WindowInsets, animations: MutableList<WindowInsetsAnimation>): WindowInsets {
-                container?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    updateMargins(
-                        bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-                    )
-                }
-
-                return insets
-            }
-        }
-        container?.setWindowInsetsAnimationCallback(cb)
     }
 
     fun checkButton(phoneLength: Int){
@@ -112,12 +83,12 @@ class SignInFragment: Fragment() {
     }
 
     fun initSpan(){
-        var string = getString(R.string.signin_text_confidential)
+        val string = getString(R.string.signin_span_text)
 
-        var spannableString = SpannableString(string)
+        val spannableString = SpannableString(string)
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                var dialog = BotomSheetConfidentialFragment()
+                val dialog = BotomSheetConfidentialFragment()
                 dialog.show(childFragmentManager, "TAG")
             }
 

@@ -13,6 +13,6 @@
     <color name="light_pink">#E6ECDAFF</color>
     <color name="magenta">#FF0078</color>
 
-    <color name="deep_blue_inactive">#6600024A</color>
-    <color name="blue">#9900024A</color>
+    <color name="deep_blue_40">#6600024A</color>
+    <color name="deep_blue_60">#9900024A</color>
 </resources>

@@ -16,7 +16,7 @@ class BotomSheetConfidentialFragment: BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBotomsheetConfidentialBinding.inflate(layoutInflater)
 
         return binding.root
@@ -24,6 +24,6 @@ class BotomSheetConfidentialFragment: BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.UserBottomSheetDialogTheme)
+        setStyle(STYLE_NORMAL, R.style.UserBottomSheetDialogTheme)
     }
 }

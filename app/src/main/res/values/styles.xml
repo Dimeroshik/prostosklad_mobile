@@ -16,9 +16,8 @@
     
     <style name="button_dark_big" parent="button_big">
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:padding">17dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="background">@drawable/button_dark</item>
+        <item name="background">@drawable/btn_dark</item>
     </style>
 
     <style name="text">

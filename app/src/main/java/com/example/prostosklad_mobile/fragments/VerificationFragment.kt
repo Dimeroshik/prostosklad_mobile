@@ -1,49 +1,43 @@
 package com.example.prostosklad_mobile.fragments
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.*
-import androidx.annotation.RequiresApi
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updateMargins
-import androidx.fragment.app.Fragment
-import com.example.prostosklad_mobile.MainActivity
+import androidx.navigation.findNavController
+import com.example.prostosklad_mobile.base.BaseFragment
 import com.example.prostosklad_mobile.R
 import com.example.prostosklad_mobile.databinding.FragmentVerificationBinding
-import com.example.prostosklad_mobile.dialogs.BotomSheetConfidentialFragment
+import com.example.prostosklad_mobile.presenters.VerificationPresenter
+import com.example.prostosklad_mobile.views.VerificationView
 import com.redmadrobot.inputmask.MaskedTextChangedListener
-import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
+import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
-class VerificationFragment: Fragment() {
+@AndroidEntryPoint
+class VerificationFragment: BaseFragment(), VerificationView {
 
-    companion object {
-        val TAG = "VerificationFragment"
-    }
+    private var binding: FragmentVerificationBinding by viewLifecycle()
 
+    @Inject
+    lateinit var presenterProvider: Provider<VerificationPresenter>
 
-
-    private lateinit var binding: FragmentVerificationBinding
+    private val verificationPresenter: VerificationPresenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var timer: CountDownTimer
     private var timerActive = false
 
-    var posTop = 0
-    var posBottom = 0
 
     private var clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(textView: View) {
-            setSpan(SpanStates.Wait)
+            verificationPresenter.changeSpanState(SpanStates.Wait)
         }
 
         override fun updateDrawState(ds: TextPaint) {
@@ -53,15 +47,14 @@ class VerificationFragment: Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentVerificationBinding.inflate(layoutInflater)
 
-        initInsets(container)
+        setInset(binding.root, top = true, bottom = true)
         initViews()
 
         return binding.root
@@ -69,106 +62,62 @@ class VerificationFragment: Fragment() {
 
     fun initViews(){
         binding.apply {
-            var textMaskListener = MaskedTextChangedListener(
+            val textMaskListener = MaskedTextChangedListener(
                 "[0000]",
                 binding.etPhone,
                 object : MaskedTextChangedListener.ValueListener {
-                    override fun onTextChanged(maskFilled: Boolean, value: String) {
-                        checkCode(value)
+                    override fun onTextChanged(maskFilled: Boolean, extractedValue: String) {
+                        verificationPresenter.checkCode(extractedValue)
                     }
                 }
             )
 
-            textMaskListener?.autocomplete = false
+            textMaskListener.autocomplete = false
 
             etPhone.addTextChangedListener(textMaskListener)
 
-            text1.text = getString(R.string.verification_text1) + "+7 " + arguments?.getString("phone")
+            val phoneStr = arguments?.getString(SignInFragment.phoneKey)
+            text1.text = getString(R.string.verification_text1, phoneStr)
 
             toolbar.setNavigationOnClickListener {
-                (activity as MainActivity).openAuthorization()
+                view?.findNavController()?.navigate(R.id.action_verificationFragment_to_signInFragment)
             }
-        }
-
-        setSpan(SpanStates.Start)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun initInsets(container: ViewGroup?){
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            posTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            posBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-
-            binding.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                updateMargins(
-                    top = posTop,
-                    bottom = posBottom)
-            }
-
-            insets
-        }
-
-        val cb = @RequiresApi(Build.VERSION_CODES.R)
-        object : WindowInsetsAnimation.Callback(DISPATCH_MODE_STOP) {
-            override fun onProgress(insets: WindowInsets, animations: MutableList<WindowInsetsAnimation>): WindowInsets {
-                container?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    updateMargins(
-                        bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-                    )
-                }
-
-                return insets
-            }
-        }
-        container?.setWindowInsetsAnimationCallback(cb)
-    }
-
-    fun checkCode(code: String){
-        //TODO тут должна быть проверка на правильность кода, пока оставлю заглушку с true/false с правильным кодом из макета
-        if (code.length == 4){
-            when(code){
-              "2133" -> setSpan(SpanStates.Complete)
-                else -> setSpan(SpanStates.False)
-            }
-
         }
     }
 
-    fun isSuccessful(code: String)= code == "2133"
-
-    fun setSpan(state: SpanStates){
+    override fun setSpan(state: SpanStates){
 
         if (timerActive) timer.cancel()
         when (state){
             SpanStates.Start -> {
-                startTimerWithString(getString(R.string.verification_start))
+                startTimerWithString(R.string.verification_span_text1)
             }
             SpanStates.Repeat ->{
-                setSpanString(getString(R.string.verification_repeat))
+                setSpanString(getString(R.string.verification_span_text2))
             }
             SpanStates.Wait -> {
-                startTimerWithString(getString(R.string.verification_wait))
+                startTimerWithString(R.string.verification_span_text4)
             }
             SpanStates.False -> {
-                setSpanString(getString(R.string.verification_false))
+                setSpanString(getString(R.string.verification_span_text5))
             }
             SpanStates.Complete -> {
-                binding.tvVerification.text = getString(R.string.verification_complete)
+                binding.tvVerification.text = getString(R.string.verification_span_text6)
             }
         }
     }
 
-    fun startTimerWithString(str: String){
+    fun startTimerWithString(strId: Int){
 
         timer = object: CountDownTimer(30000, 1000){
             override fun onTick(millisUntilFinished: Long) {
-                var seconds = millisUntilFinished / 1000
-                binding.tvVerification.text = str + " $seconds..."
+                val seconds = millisUntilFinished / 1000
+                binding.tvVerification.text = getString(strId, seconds)
             }
 
             override fun onFinish() {
                 timerActive = false
-                setSpan(SpanStates.Repeat)
+                verificationPresenter.changeSpanState(SpanStates.Repeat)
             }
         }
 
@@ -177,8 +126,8 @@ class VerificationFragment: Fragment() {
     }
 
     fun setSpanString(str: String) {
-        var endString = getString(R.string.verification_send)
-        var spannableString = SpannableString(str + " " + endString)
+        val endString = getString(R.string.verification_span_text3)
+        val spannableString = SpannableString(str + " " + endString)
 
         spannableString.setSpan(clickableSpan, str.length + 1, str.length + endString.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 

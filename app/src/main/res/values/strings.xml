@@ -7,23 +7,30 @@
     <string name="onboarding_item_text2">Видеоконтроль 24/7, Сухое отапливаемое помещение, Современная система пожаробезопасности</string>
     <string name="onboarding_item_header3">Приходите, когда удобно</string>
     <string name="onboarding_item_text3">Вы имеете доступ к кладовке 24 часа 7 дней в неделю</string>
+    <string name="onboarding_btn_next">Далее</string>
+    <string name="onboarding_btn_skip">Пропустить</string>
 
-    <string name="signin_header">Вход / Регистрация</string>
-    <string name="signin_h1">Введите ваш номер телефона:</string>
+    <string name="signin_header1">Вход / Регистрация</string>
+    <string name="signin_header2">Введите ваш номер телефона:</string>
     <string name="signin_phone_hint">--- --- -- --</string>
-    <string name="button_next">Продолжить</string>
-    <string name="signin_text_confidential">Продолжая, вы соглашаетесь с положением об обработке и защите персональных данных</string>
-    <string name="header_confidential">Политика в отношении обработки персональных данных</string>
+    <string name="signin_button_text">Продолжить</string>
+    <string name="signin_span_text">Продолжая, вы соглашаетесь с положением об обработке и защите персональных данных</string>
+    <string name="signin_textview_prefix">+7</string>
+
+    <string name="confidential_header1">Политика в отношении обработки персональных данных</string>
     <string name="confidential_header2">1.Общие положения</string>
     <string name="confidential_content1">1.1 Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» (далее – «ФЗ «О персональных данных») и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Обществом с ограниченной ответственностью «СКЛАДНО» (ОГРН: 1217700174174; ИНН: 9731078062), имеющим юридический адрес 121205, г. Москва, тер. Сколково инновационного центра, Большой б-р, д. 42, стр. 1, раб.уч. 8,12 (далее – «Оператор»).</string>
     <string name="confidential_content2">1.2 Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</string>
     <string name="confidential_content3">1.3 Настоящая политика Оператора в отношении обработки персональных данных (далее – «Политика») применяется к обработке персональных данных, которые Оператор может получить в ходе и в результате взаимодействия с клиентами, в частности в ходе использования ими веб-сайтов https://skladno.io, https://skladno.pro, приложения для телефона Оператора, а также иных способов связи с Оператором (например, телефон, электронная почта, Instagram, ВКонтакте и т.д.).</string>
+
     <string name="verification_header">Введите код для верификации</string>
-    <string name="verification_text1">Мы отправили вам СМС с кодом, чтобы подтвердить номер: </string>
-    <string name="verification_start">Код отправлен. Повторить запрос можно будет через</string>
-    <string name="verification_repeat">Не получили СМС? </string>
-    <string name="verification_send">Отправить код еще раз</string>
-    <string name="verification_wait">Мы отправили новый код. Повторить запрос на новый код можно будет через</string>
-    <string name="verification_false">Неверный код.</string>
-    <string name="verification_complete">Код подтвержден</string>
+    <string name="verification_text1">Мы отправили вам СМС с кодом, чтобы подтвердить номер: +7 %1$s</string>
+    <string name="verification_span_text1">Код отправлен. Повторить запрос можно будет через %1$d..</string>
+    <string name="verification_span_text2">Не получили СМС? </string>
+    <string name="verification_span_text3">Отправить код еще раз</string>
+    <string name="verification_span_text4">Мы отправили новый код. Повторить запрос на новый код можно будет через %1$d..</string>
+    <string name="verification_span_text5">Неверный код.</string>
+    <string name="verification_span_text6">Код подтвержден</string>
+    <string name="verification_tv_prefix">Код:</string>
+    <string name="verification_edittext_hint">••••</string>
 </resources>

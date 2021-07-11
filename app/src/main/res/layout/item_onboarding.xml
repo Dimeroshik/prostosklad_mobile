@@ -5,18 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/item_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/onboarding_image1"
+        tools:src="@drawable/img1_onboarding"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="189dp"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/item_header"
         style="@style/text_h2"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         tools:text="@string/onboarding_item_header1"
        />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/item_text"
         style="@style/text_usability"
         android:layout_width="0dp"

@@ -4,19 +4,31 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.36018518518518516" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/background_bottomsheet.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/btn_dark.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/button_dark.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/button_dark_inactive.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/button_inactive.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/edittext_background.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/img1_onboarding.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/img2_onboarding.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/img3_onboarding.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/mark_onboarding.xml" value="0.2015" />
         <entry key="app/src/main/res/drawable/onboarding_image1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/onboarding_image2.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/onboarding_image3.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/viewpager_mark.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/viewpager_mark_unselected.xml" value="0.2015" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/fragment_botomsheet_confidential.xml" value="0.280078125" />
         <entry key="app/src/main/res/layout/fragment_onboarding.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.2657999702032054" />
-        <entry key="app/src/main/res/layout/fragment_verification.xml" value="0.1197995453059743" />
+        <entry key="app/src/main/res/layout/fragment_verification.xml" value="0.2781125335872243" />
         <entry key="app/src/main/res/layout/item_onboarding.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/item_onboarding_tablayout.xml" value="0.280078125" />
       </map>
     </option>
   </component>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/onBoardingFragment">
+
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.example.prostosklad_mobile.fragments.OnBoardingFragment"
+        android:label="OnBoardingFragment">
+        <action
+            android:id="@+id/action_onBoardingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.prostosklad_mobile.fragments.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" >
+            <argument
+                android:name="phone"
+                android:defaultValue="(000) 000-00-00" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.example.prostosklad_mobile.fragments.VerificationFragment"
+        android:label="VerificationFragment" >
+        <argument
+            android:name="phone"
+            app:argType="string"
+            android:defaultValue="(000) 000-00-00" />
+        <action
+            android:id="@+id/action_verificationFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+</navigation>
