@@ -118,7 +118,6 @@ abstract class BaseFragment: MvpAppCompatFragment() {
             fun onDestroy() {
                 binding = null
                 Log.d("TEST", "binding destroyed")
-                Toast.makeText(context, "binding destroyed", Toast.LENGTH_SHORT).show()
             }
 
             override fun getValue(
